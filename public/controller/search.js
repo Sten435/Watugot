@@ -1,0 +1,48 @@
+const db_config = require('../configurations/db_config.js');
+const escape = require('escape-html');
+
+function search(res, req) {
+  let table = escape(req.params.table)
+  let value = escape(req.params.value)
+
+  if (table !== 'undefined' && value !== 'undefined') {
+    if (table === 'item' || table === 'shop') {
+      let sql, add_is_featured = ""
+
+      if (typeof value == Boolean || value == 1 || value == 0) {
+        add_is_featured = `OR is_featured = ${db_config.escape(value)}`
+      }
+
+      if (table === 'item') {
+        sql = `SELECT * FROM item WHERE name = ${db_config.escape(value)} OR description = ${db_config.escape(value)} OR category = ${db_config.escape(value)} OR photo_id = ${db_config.escape(value)} OR price = ${db_config.escape(value)} OR by_user = ${db_config.escape(value)} OR featured_until = ${db_config.escape(value)} OR posted_on = ${db_config.escape(value)} OR show_phone = ${db_config.escape(value)} ${add_is_featured} ORDER BY Rand()`
+      } else {
+        sql = `SELECT * FROM shop WHERE name = ${db_config.escape(value)} OR description = ${db_config.escape(value)} OR adress = ${db_config.escape(value)} OR created_date = ${db_config.escape(value)} ${add_is_featured} ORDER BY Rand()`
+      }
+
+      db_config.query({ sql }, function (error, results, fields) {
+        if (error) throw error;
+
+        if (results < 1) {
+          results = {
+            error: true,
+            typeof: 'No content was taken from database.'
+          }
+          res.status(206).json(results)
+        }
+        else {
+          results = {
+            error: false,
+            sql: results
+          }
+          res.status(200).json(results)
+        }
+      })
+
+    } else {
+      return res.status(400).json({ error: true, typeof: 'The passed table is incorrect.' })
+    }
+  }
+  else return res.status(400).json({ error: true, typeof: 'Some required values are not filled in.' })
+}
+
+module.exports = search

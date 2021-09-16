@@ -7,6 +7,8 @@ const getCatagory = require('../../controller/getCatagory.js')
 const getFeatured = require('../../controller/getFeatured.js')
 const get_Stores_Or_Items = require('../../controller/get_Stores_Or_Items.js')
 const getRecent = require('../../controller/getRecent.js')
+const featured = require('../../controller/featured.js')
+const validateauth = require('../../controller/validateauth.js')
 
 router.get('/api/items', (req, res) => {
     get_Stores_Or_Items(res, 'item')
@@ -42,6 +44,16 @@ router.get('/api/store/:id', (req, res) => {
 
 router.get('/api/search/:table/:value', (req, res) => {
     search(res, req);
+})
+
+router.get('/api/featured/:authkey/:display_id', (req, res) => {
+    let [authKey, display_id] = req.query;
+    if (validateauth(authkey)) {
+        featured(res, display_id)
+    }
+    else{
+        res.sendStatus(400).json({ error: true, typeof: 'Invalid Auth Validation' })
+    }
 })
 
 module.exports = router

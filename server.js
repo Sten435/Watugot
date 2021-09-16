@@ -9,10 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(routes);
-app.get('/', (req, res) => {
-  console.log(req);
-  res.send('TEST');
-})
 
 app.get('*', (req, res) => {
   res.status(404).json({

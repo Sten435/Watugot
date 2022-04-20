@@ -1,7 +1,7 @@
-const db_config = require('../configurations/db_config.js');
+import query from '../configurations/db_config.js';
 
 function getRecent(res) {
-    db_config.query({
+    query({
         sql: "SELECT * FROM item order by posted_on DESC LIMIT 16"
     }, function (error, results, fields) {
         if (error) throw error;
@@ -22,4 +22,4 @@ function getRecent(res) {
     })
 }
 
-module.exports = getRecent
+export default getRecent

@@ -1,9 +1,9 @@
-var mysql = require('mysql');
+import { createConnection } from 'mysql';
 
-var connection = mysql.createConnection({
+var connection = createConnection({
     database: 'watugot',
     host: 'localhost',
-    user: 'stan',
+    user: 'root',
     password: '',
     stringifyObjects: true,
     dateStrings: true
@@ -18,4 +18,4 @@ connection.connect(function (err) {
     console.log('connected as id ' + connection.threadId);
 });
 
-module.exports = connection
+export default connection

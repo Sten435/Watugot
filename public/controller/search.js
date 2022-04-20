@@ -1,5 +1,5 @@
-const db_config = require('../configurations/db_config.js');
-const escape = require('escape-html');
+import query from '../configurations/db_config.js';
+import escape from 'escape-html';
 
 function search(res, req) {
   let table = escape(req.params.table)
@@ -10,16 +10,16 @@ function search(res, req) {
       let sql, add_is_featured = ""
 
       if (typeof value == Boolean || value == 1 || value == 0) {
-        add_is_featured = `OR is_featured = ${db_config.escape(value)}`
+        add_is_featured = `OR is_featured = ${escape(value)}`
       }
 
       if (table === 'item') {
-        sql = `SELECT * FROM item WHERE name = ${db_config.escape(value)} OR description = ${db_config.escape(value)} OR category = ${db_config.escape(value)} OR photo_id = ${db_config.escape(value)} OR price = ${db_config.escape(value)} OR by_user = ${db_config.escape(value)} OR featured_until = ${db_config.escape(value)} OR posted_on = ${db_config.escape(value)} OR show_phone = ${db_config.escape(value)} ${add_is_featured} ORDER BY Rand()`
+        sql = `SELECT * FROM item WHERE name = ${escape(value)} OR description = ${escape(value)} OR category = ${escape(value)} OR photo_id = ${escape(value)} OR price = ${escape(value)} OR by_user = ${escape(value)} OR featured_until = ${escape(value)} OR posted_on = ${escape(value)} OR show_phone = ${escape(value)} ${add_is_featured} ORDER BY Rand();`
       } else {
-        sql = `SELECT * FROM shop WHERE name = ${db_config.escape(value)} OR description = ${db_config.escape(value)} OR adress = ${db_config.escape(value)} OR created_date = ${db_config.escape(value)} ${add_is_featured} ORDER BY Rand()`
+        sql = `SELECT * FROM shop WHERE name = ${escape(value)} OR description = ${escape(value)} OR adress = ${escape(value)} OR created_date = ${escape(value)} ${add_is_featured} ORDER BY Rand()`
       }
 
-      db_config.query({ sql }, function (error, results, fields) {
+      query({ sql }, function (error, results, fields) {
         if (error) throw error;
 
         if (results < 1) {
@@ -45,4 +45,4 @@ function search(res, req) {
   else return res.status(400).json({ error: true, typeof: 'Some required values are not filled in.' })
 }
 
-module.exports = search
+export default search

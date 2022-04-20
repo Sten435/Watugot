@@ -1,6 +1,6 @@
-const db_config = require('../configurations/db_config.js');
+import query from '../configurations/db_config.js';
 
-function grab_Shop_Or_Item_With_Id(req, res, type) {
+function grabShopOrItemWithId(req, res, type) {
     
     if(req.params.id == 'undefined'){
         return res.status(400).json({ error: true, type: 'You have to pass an id.' })
@@ -13,7 +13,7 @@ function grab_Shop_Or_Item_With_Id(req, res, type) {
         return res.status(400).json({ error: true, type: 'Item id is not a valid Number.' })
     }
 
-    db_config.query({
+    query({
         sql: `SELECT * FROM ${type} where id = ? LIMIT 1`,
     }, [query_id], function (error, results, fields) {
         if (error) throw error;
@@ -35,4 +35,4 @@ function grab_Shop_Or_Item_With_Id(req, res, type) {
     })
 }
 
-module.exports = grab_Shop_Or_Item_With_Id
+export default grabShopOrItemWithId

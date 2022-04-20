@@ -1,11 +1,8 @@
-const escape = require('escape-html');
-const util = require("util");
-const Uuid = require('uuid');
-const path = require('path');
+import escape from 'escape-html';
+import { promisify } from "util";
+import { v1 } from 'uuid';
+import { extname } from 'path';
 
-/**
- * @param {'req'} req
- */
 async function saveImage(req, is_profilePic = false) {
     if (req.files == 'undefined' || req.files == undefined || req.files == 'null' || req.files == null) return { error: true, typeof: 'No file was uploaded.' }
   
@@ -17,7 +14,7 @@ async function saveImage(req, is_profilePic = false) {
     if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg') {
       const fileName = file.name
       const size = file.data.length
-      const extension = path.extname(fileName)
+      const extension = extname(fileName)
   
       const allowedExtensions = /png|jpeg|jpg/
   
@@ -27,14 +24,14 @@ async function saveImage(req, is_profilePic = false) {
       const md5 = file.md5
       let MOVE_URL;
       if(is_profilePic){
-        MOVE_URL = `./public/uploads/profiles/${Uuid.v1()}${md5}${extension}`
+        MOVE_URL = `./public/uploads/profiles/${v1()}${md5}${extension}`
       }else{
-        MOVE_URL = `./public/uploads/images/${Uuid.v1()}${md5}${extension}`
+        MOVE_URL = `./public/uploads/images/${v1()}${md5}${extension}`
       }
-      let URL = `${Uuid.v1()}${md5}${extension}`
+      let URL = `${v1()}${md5}${extension}`
       URL = escape(URL)
   
-      await util.promisify(file.mv)(MOVE_URL)
+      await promisify(file.mv)(MOVE_URL)
   
       return { error: false, URL: URL }
     }
@@ -43,4 +40,4 @@ async function saveImage(req, is_profilePic = false) {
     }
   }
 
-  module.exports = saveImage
+  export default saveImage

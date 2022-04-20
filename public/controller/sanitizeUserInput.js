@@ -1,9 +1,5 @@
-const escape = require('escape-html');
+import escape from 'escape-html';
 
-/**
- * @param {'array'} userInputArray
- * @param {'res'} res
- */
 function sanitizeUserInput(userInputArray, res) {
     let sanitizedArray = Array();
   
@@ -16,4 +12,4 @@ function sanitizeUserInput(userInputArray, res) {
     return sanitizedArray
   }
 
-  module.exports = sanitizeUserInput
+  export default sanitizeUserInput

@@ -1,9 +1,10 @@
-const db_config = require('../configurations/db_config.js');
+import query from '../configurations/db_config.js';
+import escape from 'escape-html';
 
 function validateauth(display_id) {
-    db_config.query({
+    query({
         sql: `SELECT * FROM users WHERE authKey = ? LIMIT 1`
-    },[db_config.escape(display_id)], function (error, results, fields) {
+    },[escape(display_id)], function (error, results, fields) {
         if (error) throw error;
     
         if (results < 1) {
@@ -15,4 +16,4 @@ function validateauth(display_id) {
     })
 }
 
-module.exports = validateauth
+export default validateauth

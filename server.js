@@ -1,12 +1,12 @@
-const express = require('express');
-const fileUpload = require('express-fileupload');
-const routes = require('./public/routes/routes.js');
+import express, { json, urlencoded } from 'express';
+import fileUpload from 'express-fileupload';
+import routes from './public/routes/routes.js';
 
 var app = express();
 const port = 3000 || process.env.port;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(routes);
 

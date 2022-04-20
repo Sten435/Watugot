@@ -1,7 +1,7 @@
-const db_config = require('../configurations/db_config.js');
+import query from '../configurations/db_config.js';
 
 function getFeatured(res, type) {
-    db_config.query({
+    query({
         sql: `SELECT * FROM ${type} WHERE is_featured = 1 order by rand() LIMIT 16`
     }, function (error, results, fields) {
         if (error) throw error;
@@ -22,4 +22,4 @@ function getFeatured(res, type) {
     })
 }
 
-module.exports = getFeatured
+export default getFeatured

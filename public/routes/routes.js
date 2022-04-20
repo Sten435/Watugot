@@ -1,12 +1,12 @@
-const express = require('express')
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const get_route = require('./get/get-route.js')
-const post_route = require('./post/post-route.js')
-const put_route = require('./put/put-routes.js')
+import get_route from './get/get-route.js';
+import post_route from './post/post-route.js';
+import put_route from './put/put-routes.js';
 
 router.use(get_route)
 router.use(post_route)
 router.use(put_route)
 
-module.exports = router
+export default router

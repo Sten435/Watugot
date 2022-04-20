@@ -1,4 +1,4 @@
-import { query } from '../configurations/db_config.js';
+import query from '../configurations/db_config.js';
 
 const getCatagory = (res) => {
     query({

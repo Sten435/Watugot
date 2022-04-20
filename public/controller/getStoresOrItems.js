@@ -1,7 +1,7 @@
-const db_config = require('../configurations/db_config.js');
+import query from '../configurations/db_config.js';
 
 function get_Stores_Or_Items(res, type) {
-    db_config.query({
+    query({
         sql: `SELECT * FROM ${type} order by rand() LIMIT 16`
     }, function (error, results, fields) {
         if (error) throw error;
@@ -22,4 +22,4 @@ function get_Stores_Or_Items(res, type) {
     })
 }
 
-module.exports = get_Stores_Or_Items
+export default get_Stores_Or_Items

@@ -1,12 +1,8 @@
-const escape = require('escape-html');
-const sanitizeUserInput = require('./sanitizeUserInput.js')
-const saveImage = require('./saveImage.js')
-const db_config = require('../configurations/db_config.js')
+import escape from 'escape-html';
+import sanitizeUserInput from './sanitizeUserInput.js';
+import saveImage from './saveImage.js';
+import query from '../configurations/db_config.js';
 
-/**
- * @param {'res'} res
- * @param {'req'} req
- */
 async function saveItem(req, res) {
     let { by_user, name, description, category, price, show_phone } = req.body;
     let unverified_userInputArray = Array(by_user, name, description, category, price, show_phone);
@@ -30,7 +26,7 @@ async function saveItem(req, res) {
         return res.status(422).json({ error: '\'price\' is not a valid number.' })
     }
     if (!image.error) {
-        db_config.query({
+        query({
             sql: "INSERT INTO `item`(`by_user`, `name`, `description`, `photo_id`, `category`, `price`, `show_phone`, `is_featured`, `featured_until`) VALUES (?,?,?,?,?,?,?,?,?);",
         }, [by_user, name, description, escape(image.URL), category, price, show_phone, null, null], function (error, results, fields) {
             if (error) throw error;
@@ -46,4 +42,4 @@ async function saveItem(req, res) {
     }
 }
 
-module.exports = saveItem
+export default saveItem

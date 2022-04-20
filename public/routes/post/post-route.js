@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const saveItem = require('../../controller/saveItem.js')
-const signup = require('../../controller/signup.js')
+import saveItem from '../../controller/saveItem.js';
+import signup from '../../controller/signup.js';
 
 router.post('/api/signup', (req, res) => {
     signup(req, res)
@@ -12,4 +12,4 @@ router.post('/api/item', async (req, res) => {
     await saveItem(req, res);
 })
 
-module.exports = router
+export default router

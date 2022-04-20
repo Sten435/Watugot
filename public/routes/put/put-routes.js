@@ -1,14 +1,15 @@
-const express = require('express')
-const router = express.Router();
+import { Router } from 'express';
+import escape from 'escape-html';
+const router = Router();
 
-const update = require('../../controller/update.js')
+import update from '../../controller/update.js';
 
 router.put('/api/update/item/:id', (req, res) => {
-    let id = parseInt(req.params.id);
-    let type = escape(req.body.type);
-    let value = escape(req.body.value);
+    const id = req.params.id;
+    const type = escape(req.body.type);
+    const value = escape(req.body.value);
 
     update(id, type, value, res, req)
 })
 
-module.exports = router
+export default router

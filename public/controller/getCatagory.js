@@ -1,8 +1,8 @@
-const db_config = require('../configurations/db_config.js');
+import { query } from '../configurations/db_config.js';
 
-function getCatagory(res) {
-    db_config.query({
-        sql: "SELECT category FROM item group by category" // remove group by category if you dont want to filter the duplicates
+const getCatagory = (res) => {
+    query({
+        sql: "SELECT DISTINCTED category FROM item;"
     }, function (error, results, fields) {
         if (error) throw error;
 
@@ -22,4 +22,4 @@ function getCatagory(res) {
     })
 }
 
-module.exports = getCatagory
+export default getCatagory

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const update = require('../../controller/update')
+const update = require('../../controller/update.js')
 
 router.put('/api/update/item/:id', (req, res) => {
     let id = parseInt(req.params.id);

@@ -2,13 +2,13 @@ const express = require('express')
 const router = express.Router()
 
 const search = require('../../controller/search.js')
-const grab_Shop_Or_Item_With_Id = require('../../controller/grab_Shop_Or_Item_With_Id.js')
+const grab_Shop_Or_Item_With_Id = require('../../controller/grabShopOrItemWithId.js')
 const getCatagory = require('../../controller/getCatagory.js')
 const getFeatured = require('../../controller/getFeatured.js')
-const get_Stores_Or_Items = require('../../controller/get_Stores_Or_Items.js')
+const get_Stores_Or_Items = require('../../controller/getStoresOrItems.js')
 const getRecent = require('../../controller/getRecent.js')
 const featured = require('../../controller/featured.js')
-const validateauth = require('../../controller/validateauth.js')
+const validateauth = require('../../controller/validateAuth.js')
 
 router.get('/api/items', (req, res) => {
     get_Stores_Or_Items(res, 'item')
